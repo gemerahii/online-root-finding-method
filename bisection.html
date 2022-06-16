@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACHINE PROJECT 2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="fixed-header">
+        <h2>NUMERICAL ANALYSIS - MACHINE PROJECT 2</h2>
+    </div>
+
+    <div class="pos">
+        <ul class="nav nav-pills nav-justified">
+            <li class="active"><a href="bisection.html">Bisection Method</a></li>
+            <li><a href="newton.html">Newtons Method</a></li>
+            <li><a href="secant.html">Secant Method</a></li>
+        </ul>
+    </div>
+    <div>
+        <form class="f"> 
+        <p>
+            Find the largest root of \(f(x)=\) <input type="text" name="function" id="function"> accurate	within	\(\epsilon\) 
+        </p>
+            <label for="a">\( a \) : </label>
+            <input type="number" name="a" id="a" min="1" value="1">
+            
+            <label for="b">\( b \) : </label>
+            <input type="number" name="b"  min="2" value="2" id="b">
+
+            <label for="e">\( \epsilon \) : </label>
+            <input type="number" name="e"  max="1" min="0" value="0.01" id="e">
+            
+            <br>
+            <input class="s" type="button" onclick="createTable()" value="CALCULATE"> 
+        </form>
+        <table id="myTable" class="center"> 
+            <thead>
+                <th class="n">\( n \)</th>
+                <th>\( a_{n} \)</th>
+                <th>\( b_{n} \)</th>
+                <th>\( c_{n} \)</th>
+                <th>\( b_{n} - c_{n} \)</th>
+                <th>\( f(c_{n})\)</th>
+            </thead>
+        </table>
+    </div>
+    <div>
+        <b><p id="ans"></p></b>
+    </div>
+    
+    <div class="fixed-footer">
+        <div class="container">&copy; 2022 by Gerome Antido BSCS3A</div>        
+    </div>
+</body>
+<script>
+
+    function createTable(){
+        //remove the previous table content
+        var rowCount = myTable.rows.length;
+        while(--rowCount)
+        myTable.deleteRow(rowCount);
+
+        var a = parseFloat(document.getElementById("a").value);
+        var b = parseFloat(document.getElementById("b").value);
+        var e = parseFloat(document.getElementById("e").value);
+        var f = document.getElementById("function").value;
+        f = f.replace('^',"**")
+        f = f.replace('e',"Math.E")
+
+        var n = 1;
+        var x = 0;
+        var bc = 0;
+        var fc = 0;
+
+        do{
+            var t = document.getElementById('myTable').insertRow(n);
+            x = ((parseFloat(a) + parseFloat(b))/2);
+    
+            bc = (b-x);
+            fc = eval(f);
+            console.log(fc)
+            t.insertCell(0).innerHTML = n;
+            t.insertCell(1).innerHTML = a.toFixed(4);
+            t.insertCell(2).innerHTML = b.toFixed(4);
+            t.insertCell(3).innerHTML = x.toFixed(4);
+            t.insertCell(4).innerHTML = bc.toFixed(5);
+            t.insertCell(5).innerHTML = fc.toFixed(4);
+            
+            if(fc > 0){
+                b = x;
+            }
+
+            else{
+                a = x;
+            }
+
+            n+=1
+        }while(e <= bc);
+        
+        var ans = document.getElementById('ans');
+        var rc = myTable.rows.length; 
+        var s = myTable.rows[rc-1].cells[3].innerHTML;
+        ans.innerHTML = "accept c<sub>"+ (n-1) + "</sub> = " + s +" as the root since b<sub>"+ (n-1)+ "</sub> - c<sub>" + (n-1) + "</sub> < &epsilon;" 
+
+    }
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+</html>

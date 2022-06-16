@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACHINE PROJECT 2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="fixed-header">
+        <h2>NUMERICAL ANALYSIS - MACHINE PROJECT 2</h2>
+    </div>
+
+    <div class="pos">
+        <ul class="nav nav-pills nav-justified">
+            <li><a href="bisection.html">Bisection Method</a></li>
+            <li><a href="newton.html">Newtons Method</a></li>
+            <li><a href="secant.html">Secant Method</a></li>
+        </ul>
+    </div>
+
+    <div class="fixed-footer">
+        <div class="container">&copy; 2022 by Gerome Antido BSCS3A</div>        
+    </div>
+</body>
+<script>
+
+    function createTable(){
+ 
+        var x=document.getElementById('myTable').insertRow(1);
+        var s = document.getElementById("x").value;
+        var t = document.getElementById("terms").value
+        
+        //x
+        var y=  x.insertCell(0);
+        y.innerHTML=s;
+
+        //f(x)
+        y=  x.insertCell(1);
+        ans = ((Math.pow(Math.E, s)-1)/s);
+        y.innerHTML= ans;
+        y=  x.insertCell(2);
+        var xstr = ans.toString().replace('.','')
+    
+
+        var sum = 1
+        for(var i = 1; i < t; i++){
+            sum +=  Math.pow(s, i)/fact(i+1)
+        }
+        y.innerHTML = sum;
+
+        var ystr = sum.toString().replace('.','')
+        
+    
+        var c = 0;
+        var sig = 0;
+        var zero = 0
+        while (xstr[c] == ystr[c]){
+            if (xstr[c] == 0){
+                zero+=1
+            }
+            sig +=1;
+            c+=1;
+        }
+        if (xstr[c-1] == 0){
+            sig-=zero;
+        }
+
+        var y=  x.insertCell(3);
+        y.innerHTML=sig;
+    } 
+
+    function fact(n){
+        // If the number is less than 0, reject it.
+        if (n < 0) 
+                return -1;
+            
+        // If the number is 0, its factorial is 1.
+        else if (n == 0) 
+            return 1;
+            
+        // Otherwise, call the recursive procedure again
+        else 
+            return (n * fact(n - 1));
+    }
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+</html>
